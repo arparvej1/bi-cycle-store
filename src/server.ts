@@ -2,18 +2,21 @@ import mongoose from 'mongoose'
 import app from './app'
 import config from './config'
 
-async function server() {
+async function startServer() {
   try {
-    await mongoose.connect(config.database_url as string)
+      await mongoose.connect(config.database_url as string);
+      console.log("Connected to the database");
 
-    app.listen(config.port, () => {
-      console.log(`Server running on port ${config.port}
-        Link: http://localhost:${config.port}
-        `)
-    })
+      app.listen(config.port, () => {
+          console.log(`Server running on port ${config.port}`);
+      });
   } catch (error) {
-    console.error(error)
+      console.error("Database connection error:", error);
   }
 }
 
-server()
+// Start the server
+startServer();
+
+// Export the app for Vercel
+export default app;
