@@ -6,9 +6,9 @@ const createProduct = async (payload: IProduct): Promise<IProduct> => {
   return result
 }
 
-const getProducts = async () => {
-  const result = await Product.find()
-  return result
+const getProducts = async (filter: any = {}) => {
+    const result = await Product.find(filter);
+    return result;
 }
 
 const getSingleProduct = async (id: string) => {

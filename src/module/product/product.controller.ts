@@ -24,8 +24,18 @@ const createProduct = async (req: Request, res: Response) => {
 
 const getProducts = async (req: Request, res: Response) => {
   try {
-    const result = await productService.getProducts()
 
+    const { name } = req.query;
+ 
+    const filter: any = {};
+ 
+    if (name) {
+      filter.name = { $regex: name, $options: 'i' }; 
+    }
+    console.log('Filter:', filter);  // Log the filter to debug
+
+    const result = await productService.getProducts(filter)  
+console.log(result);
     res.send({
       status: true,
       message: 'Bicycles retrieved successfully',
