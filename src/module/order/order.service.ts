@@ -6,6 +6,15 @@ const createOrder = async (payload: IOrder) => {
   return result
 }
 
+const getRevenue = async () => {
+  const pipeline = [
+    { $group: { _id: null, totalRevenue: { $sum: "$totalPrice" } } }
+  ];
+  const result = await Order.aggregate(pipeline);
+  return result[0].totalRevenue
+}
+
 export const orderService = {
-  createOrder
+  createOrder,
+  getRevenue
 }

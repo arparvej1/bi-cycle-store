@@ -18,8 +18,27 @@ const createOrder = async (req: Request, res: Response) => {
       error,
     })
   }
- }
+}
 
-export const orderController ={
-  createOrder
+const getRevenue = async (req: Request, res: Response) => {
+  try {
+    const totalRevenue = await orderService.getRevenue()
+
+    res.send({
+      status: true,
+      message: "Revenue calculated successfully",
+      data: { totalRevenue }
+    })
+  } catch (error) {
+    res.send({
+      success: false,
+      message: "Something went wrong",
+      error,
+    })
+  }
+}
+
+export const orderController = {
+  createOrder,
+  getRevenue
 }
