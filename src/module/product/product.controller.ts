@@ -46,7 +46,7 @@ const getProducts = async (req: Request, res: Response) => {
     res.send({
       status: true,
       message: 'Bicycles retrieved successfully',
-      result,
+      data: result
     })
   } catch (error) {
     res.json({
@@ -66,7 +66,7 @@ const getSingleProduct = async (req: Request, res: Response) => {
     res.send({
       status: true,
       message: 'Bicycle retrieved successfully',
-      result,
+      data: result
     })
   } catch (error) {
     res.json({
@@ -87,7 +87,7 @@ const updateProduct = async (req: Request, res: Response) => {
     res.send({
       status: true,
       message: 'Bicycle updated successfully',
-      result,
+      data: result
     })
   } catch (error) {
     res.json({
@@ -106,7 +106,7 @@ const deleteProduct = async (req: Request, res: Response) => {
     res.send({
       status: true,
       message: 'Bicycle deleted successfully',
-      result: {},
+      data: {}
     })
   } catch (error) {
     res.json({
