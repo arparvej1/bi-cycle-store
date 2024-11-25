@@ -8,7 +8,7 @@ async function server() {
 
     app.listen(config.port, () => {
       console.log(`Server running on port ${config.port}
-        Link: http://localhost/${config.port}
+        Link: http://localhost:${config.port}
         `)
     })
   } catch (error) {
