@@ -1,8 +1,16 @@
 import express, { Request, Response } from 'express'
 import productRouter from './module/product/product.router'
 import orderRouter from './module/order/order.router'
+import cors from "cors";
 
 const app = express()
+
+app.use(cors({
+  origin: [
+    'http://localhost:5173'
+  ],
+  credentials: true
+}));
 
 // middleware
 app.use(express.json())
