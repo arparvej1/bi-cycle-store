@@ -1,7 +1,26 @@
 import { Request, Response } from 'express'
 import { productService } from './product.service'
 
-const createProduct = async (req: Request, res: Response) => {
+
+const handleError = (res: Response, error: unknown) => {
+  if (error instanceof Error) {
+    console.error(error);  // Log the error for debugging
+    res.status(500).json({
+      status: false,
+      message: 'Something went wrong',
+      error: error.message,
+    });
+  } else {
+    console.error(error);  // Log the unknown error for debugging
+    res.status(500).json({
+      status: false,
+      message: 'Something went wrong',
+      error: 'Unknown error',
+    });
+  }
+};
+
+const createProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const payload = req.body
     // console.log(payload)
@@ -13,24 +32,20 @@ const createProduct = async (req: Request, res: Response) => {
       message: 'Bicycle created successfully',
       data: result,
     })
-  } catch (error) {
-    res.json({
-      status: false,
-      message: 'Something went wrong',
-      error,
-    })
+  } catch (error: unknown) {
+    handleError(res, error);
   }
 }
 
-const getProducts = async (req: Request, res: Response) => {
+const getProducts = async (req: Request, res: Response): Promise<void> => {
   try {
 
     const { name, brand, type } = req.query;
- 
+
     const filter: any = {};
- 
+
     if (name) {
-      filter.name = { $regex: name, $options: 'i' }; 
+      filter.name = { $regex: name, $options: 'i' };
     }
 
     if (brand) {
@@ -41,23 +56,19 @@ const getProducts = async (req: Request, res: Response) => {
       filter.type = { $regex: type, $options: 'i' };
     }
 
-    const result = await productService.getProducts(filter)  
+    const result = await productService.getProducts(filter)
 
     res.send({
       status: true,
       message: 'Bicycles retrieved successfully',
       data: result
     })
-  } catch (error) {
-    res.json({
-      status: false,
-      message: 'Something went wrong',
-      error,
-    })
+  } catch (error: unknown) {
+    handleError(res, error);
   }
 }
 
-const getSingleProduct = async (req: Request, res: Response) => {
+const getSingleProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const productId = req.params.productId
 
@@ -68,16 +79,12 @@ const getSingleProduct = async (req: Request, res: Response) => {
       message: 'Bicycle retrieved successfully',
       data: result
     })
-  } catch (error) {
-    res.json({
-      status: false,
-      message: 'Something went wrong',
-      error,
-    })
+  } catch (error: unknown) {
+    handleError(res, error);
   }
 }
 
-const updateProduct = async (req: Request, res: Response) => {
+const updateProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const productId = req.params.productId
     const body = req.body
@@ -89,16 +96,12 @@ const updateProduct = async (req: Request, res: Response) => {
       message: 'Bicycle updated successfully',
       data: result
     })
-  } catch (error) {
-    res.json({
-      status: false,
-      message: 'Something went wrong',
-      error,
-    })
+  } catch (error: unknown) {
+    handleError(res, error);
   }
 }
 
-const deleteProduct = async (req: Request, res: Response) => {
+const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const productId = req.params.productId
     const result = await productService.deleteProduct(productId)
@@ -108,12 +111,8 @@ const deleteProduct = async (req: Request, res: Response) => {
       message: 'Bicycle deleted successfully',
       data: {}
     })
-  } catch (error) {
-    res.json({
-      status: false,
-      message: 'Something went wrong',
-      error,
-    })
+  } catch (error: unknown) {
+    handleError(res, error);
   }
 }
 
