@@ -64,8 +64,8 @@ yarn install
 Make sure you have **MongoDB** running locally or set up a **MongoDB Atlas** cloud database. Update the `MONGO_URI` environment variable in the `.env` file to match your MongoDB URI:
 
 ```env
-MONGO_URI=mongodb://localhost:27017/bicycle-store
-PORT=3000
+DATABASE_URL=mongodb://localhost:27017
+PORT=5000
 ```
 
 ### 4. Run the Server
